@@ -377,6 +377,13 @@ declare namespace API {
     token: string;
   };
 
+  type Response<T = any> = {
+    /** JWT身份Token */
+    msg: string;
+    code: number;
+    data: T
+  };
+
   type LogLoginLogPageParams = {
     page?: number;
     pageSize?: number;
@@ -1271,5 +1278,12 @@ declare namespace API {
 
   type UserUpdateParams = {
     id: number;
+  };
+ // TODO 业务
+  type TagDto = {
+    /** 手机号/邮箱 */
+    name: string;
+    /** 密码 */
+    status: 0 | 1;
   };
 }

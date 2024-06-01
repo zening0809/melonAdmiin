@@ -55,7 +55,7 @@ service.interceptors.response.use(
 
     // if the custom code is not 200, it is judged as an error.
     if (res.code !== ResultEnum.SUCCESS) {
-      $message.error(res.message || UNKNOWN_ERROR);
+      $message.error(res.msg ||res.message || UNKNOWN_ERROR);
       // Illegal token
       if ([1101, 1105].includes(res.code)) {
         // to re-login
