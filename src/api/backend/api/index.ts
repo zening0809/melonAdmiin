@@ -27,6 +27,7 @@ import * as netDiskOverview from './netDiskOverview';
 import * as businessTodo from './businessTodo';
 import * as tagService from './tag';
 import * as stakeService from './stake';
+import * as pointsService from './points';
 export default {
   auth,
   account,
@@ -52,5 +53,6 @@ export default {
   netDiskOverview,
   businessTodo,
   tagService,
-  stakeService
+  stakeService,
+  pointsService
 };
