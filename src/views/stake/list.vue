@@ -26,6 +26,7 @@ import { useTable } from '@/components/core/dynamic-table';
 import { waitTime } from '@/utils/common';
 import Api from '@/api/'
 import {useFormModal} from "@/hooks/useModal";
+import router from "@/router";
 const [DynamicTable, dynamicTableInstance] = useTable();
 const [showModal] = useFormModal();
 const openMenuModal = async (record: any, text = '', type: 'Y' | 'N' = 'Y') => {
@@ -80,7 +81,11 @@ const columns2 = [
 
 
       actions.push({
-        label: '详情'
+        label: '详情',
+        onClick({record}) {
+          console.log('record',record)
+          router.push(`/stake/detail/${record.stake_id}`)
+        }
       })
       // actions.push({
       //   label: '删除'

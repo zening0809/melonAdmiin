@@ -17,6 +17,12 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('@/views/stake/list.vue'),
                 meta: {title: t('routes.stake.list')},
             },
+            {
+                path: 'detail/:id',
+                name: `${moduleName}-detail`,
+                component: () => import('@/views/stake/detail.vue'),
+                meta: {title: t('routes.stake.detail'), hideInMenu: true,},
+            },
         ],
     },
 ]
