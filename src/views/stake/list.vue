@@ -14,6 +14,17 @@
             {{ record.name }}
           </template>
         </template>
+        <template #toolbar>
+<!--          <ClerkProvider>-->
+<!--            <SignedIn>-->
+<!--              <UserButton after-sign-out-url="https://foo.bar" />-->
+<!--            </SignedIn>-->
+<!--            <SignedOut>-->
+<!--              <SignInButton mode="modal" />-->
+<!--            </SignedOut>-->
+<!--          </ClerkProvider>-->
+          <SignIn path="/sign-in" routing="path" sign-up-url="/sign-up" />
+        </template>
       </DynamicTable>
     </Card>
   </div>
@@ -26,6 +37,7 @@ import { useTable } from '@/components/core/dynamic-table';
 import { waitTime } from '@/utils/common';
 import Api from '@/api/'
 import {useFormModal} from "@/hooks/useModal";
+import { SignIn  } from 'vue-clerk'
 import router from "@/router";
 const [DynamicTable, dynamicTableInstance] = useTable();
 const [showModal] = useFormModal();
@@ -84,7 +96,7 @@ const columns2 = [
         label: '详情',
         onClick({record}) {
           console.log('record',record)
-          router.push(`/stake/detail/${record.stake_id}`)
+          router.push(`/stake/detail/${record.post_id}`)
         }
       })
       // actions.push({

@@ -5,7 +5,7 @@
       :search="false"
       :showToolBar="false"
       bordered
-      :data-request="getWzryHeroList"
+      :dataSource="props.list"
       :columns="columns"
       row-key="heroid"
       @toggle-advanced="toggleAdvanced"
@@ -22,6 +22,8 @@
   import { getWzryHeroList } from '@/api/demo/hero';
 
   const [DynamicTable, dynamicTableInstance] = useTable();
+  const props = defineProps(['list'])
+  console.log('props:',props)
 
   function defaultHeader() {
     // 默认Object.keys(data[0])作为header

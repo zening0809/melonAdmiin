@@ -3,68 +3,85 @@ import type { TableColumn } from '@/components/core/dynamic-table';
 
 export const columns: TableColumn[] = [
   {
-    title: '头像',
+    title: '用户ID',
     width: 100,
     hideInSearch: true,
-    dataIndex: 'faceimg',
-    customRender: ({ record }) => (
-      <Image src={record.faceimg} preview={{ src: record.heroimg }} key={record.faceimg}></Image>
-    ),
+    dataIndex: 'user_id',
   },
   {
-    title: '英雄名称',
-    dataIndex: 'cname',
+    title: '用户名称',
+    dataIndex: 'user_name',
     hideInSearch: true,
   },
   {
-    title: '英雄称号',
-    dataIndex: 'title',
+    title: '投票项',
+    dataIndex: 'vote_option',
     hideInSearch: true,
   },
   {
-    title: '定位',
-    dataIndex: 'occupation',
+    title: '理由',
+    dataIndex: 'user_remark',
     hideInSearch: true,
   },
   {
-    title: '皮肤',
+    title: '陪审轮次',
     dataIndex: 'skin_name',
     hideInSearch: true,
-    formItemProps: {
-      component: 'Select',
-      componentProps: {
-        options: [
-          {
-            label: '皮肤1',
-            value: 'aa',
-          },
-          {
-            label: '皮肤2',
-            value: 'bb',
-          },
-        ],
-      },
-    },
+
     customRender: ({ record }) => (
-      <div>
-        {record.skin_name?.split('|')?.map((name) => (
-          <Tag color={'blue'} key={name}>
-            {name}
-          </Tag>
-        ))}
-      </div>
+      '1'
     ),
   },
+
   {
-    title: '操作',
-    width: 120,
-    dataIndex: 'ACTION',
+    title: '状态',
+    dataIndex: 'vote_status',
     hideInSearch: true,
-    actions: ({ record }) => [
-      {
-        label: '查看详情',
-        onClick: () => window.open(record.infourl),
-      },
-    ],
+    customRender: ({record}) => {
+      return record.vote_status = 1 ? '' : ''
+    }
   },
+
+];
+export const columns2: TableColumn[] = [
+  {
+    title: '用户ID',
+    width: 100,
+    hideInSearch: true,
+    dataIndex: 'user_id',
+  },
+  {
+    title: '用户名称',
+    dataIndex: 'user_name',
+    hideInSearch: true,
+  },
+  {
+    title: '投票项',
+    dataIndex: 'review_option',
+    hideInSearch: true,
+  },
+  {
+    title: '理由',
+    dataIndex: 'reason',
+    hideInSearch: true,
+  },
+  {
+    title: '陪审轮次',
+    dataIndex: 'skin_name',
+    hideInSearch: true,
+
+    customRender: ({ record }) => (
+        '1'
+    ),
+  },
+
+  {
+    title: '状态',
+    dataIndex: 'review_status',
+    hideInSearch: true,
+    customRender: ({record}) => {
+      return record.review_status = 1 ? '未陪审' : record.review_status = 2  ? '已审批' :  ''
+    }
+  },
+
 ];

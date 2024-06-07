@@ -61,10 +61,8 @@ const visible = ref(false);
 const modalFormRef = ref<FormInstance>();
 
 const loadData = async (params): Promise<API.TableListResult> => {
-  console.log('params', params);
   const res = await Api.tagService.getTagsService(params)
   await waitTime(500);
-  console.log("res:", res)
   // 手动设置搜索表单的搜索项
   dynamicTableInstance?.getQueryFormRef()?.updateSchema?.([
     {

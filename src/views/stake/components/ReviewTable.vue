@@ -5,8 +5,8 @@
       :search="false"
       :showToolBar="false"
       bordered
-      :data-request="getWzryHeroList"
-      :columns="columns"
+      :data-source="props.list"
+      :columns="columns2"
       row-key="heroid"
       @toggle-advanced="toggleAdvanced"
   >
@@ -15,12 +15,13 @@
 
 <script lang="ts" setup>
   import { Card } from 'ant-design-vue';
-  import { columns } from './columns';
+  import { columns ,columns2} from './columns';
   import { useTable } from '@/components/core/dynamic-table';
   import { jsonToSheetXlsx } from '@/components/basic/excel';
 
   import { getWzryHeroList } from '@/api/demo/hero';
-
+  const props = defineProps(['list'])
+  console.log('props:',props)
   const [DynamicTable, dynamicTableInstance] = useTable();
 
   function defaultHeader() {
