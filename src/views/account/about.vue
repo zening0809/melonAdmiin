@@ -2,12 +2,10 @@
   <div>
     <Card>
       <Card.Meta title="关于">
-        <template #description>
-          <BlankLink :url="pkg.author.url" :text="pkg.name" />{{ description }}
-        </template>
+        <template #description> <BlankLink url="" text="melon" />{{ description }} </template>
       </Card.Meta>
     </Card>
-    <Card class="mt-3">
+    <!-- <Card class="mt-3">
       <Descriptions title="项目信息" :column="2" bordered>
         <Descriptions.Item label="版本">
           <Tag color="processing">{{ pkg.version }}</Tag>
@@ -40,12 +38,12 @@
           </Descriptions.Item>
         </template>
       </Descriptions>
-    </Card>
+    </Card> -->
   </div>
 </template>
 
 <script setup lang="tsx">
-  import { Descriptions, Card, Tag } from 'ant-design-vue';
+  import { Card } from 'ant-design-vue';
 
   defineOptions({
     name: 'About',
@@ -69,12 +67,7 @@
     return allDeps[depName].match(/\d+/)?.[0] || '';
   };
 
-  const description = `
-    的前端项目是基于 Vue${getMajorVersion('vue')}.x、
-    Vite${getMajorVersion('vite')}.x、
-    Ant-Design-Vue${getMajorVersion('ant-design-vue')}.x 、
-    TypeScript${getMajorVersion('typescript')}.x 开发，
-    内置了动态路由、权限验证、并提供了常用的功能组件，帮助你快速搭建企业级中后台产品原型。
-    原则上不会限制任何代码用于商用。
-  `;
+  // const description = `
+  //  a Melon
+  // `;
 </script>

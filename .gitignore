@@ -33,4 +33,5 @@ yarn-error.log*
 # auto generate file
 types/auto-imports.d.ts
 types/components.d.ts
+.history
  
