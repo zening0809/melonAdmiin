@@ -7,4 +7,4 @@ import topic from './topic';
 import stake from './stake';
 import points from './points';
 
-export default [...dashboard, ...tag, ...topic,...stake, ...points];
+export default [...dashboard, ...tag, ...topic, ...stake, ...points];

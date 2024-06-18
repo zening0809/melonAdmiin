@@ -1,10 +1,7 @@
-import { debounce } from 'lodash-es';
-import { Tag, Spin } from 'ant-design-vue';
 import type { TableColumn } from '@/components/core/dynamic-table';
 import { waitTime } from '@/utils/common';
 import { useDictStore } from '@/store/modules/dict';
-import {formatToDateTime} from "@/utils/dateUtil";
-import {ColumnKeyFlag} from "@/components/core/dynamic-table/src/types";
+import { formatToDateTime } from '@/utils/dateUtil';
 
 const names = ['王路飞', '王大蛇', '李白', '刺客伍六七'];
 const { fetchDict, dictPending, showDictLabel } = useDictStore();
@@ -73,12 +70,12 @@ export const columns: TableColumn<ListItemType>[] = [
     width: 60,
     align: 'center',
     fixed: 'left',
-    hideInSearch: true
+    hideInSearch: true,
   },
   {
     title: '标签名称',
     dataIndex: 'content',
-    searchField:'content',
+    searchField: 'content',
     sorter: true,
     width: 300,
     resizable: true,
@@ -148,7 +145,7 @@ export const columns: TableColumn<ListItemType>[] = [
   {
     title: '关注帖子数',
     dataIndex: 'postCount',
-    hideInSearch: true
+    hideInSearch: true,
   },
   {
     title: '状态',
@@ -184,7 +181,7 @@ export const columns: TableColumn<ListItemType>[] = [
       }),
     },
     customRender: ({ record }) => (
-        <span>{record.tag_status === 1? '公开' : '隐藏'}</span>
+      <span>{record.tag_status === 1 ? '公开' : '隐藏'}</span>
       // <Spin spinning={dictPending['sell_status']} size="small">
       //   <Tag color={record.status == 1 ? 'red' : 'default'}>
       //     {showDictLabel('sell_status', record.status)}
@@ -198,29 +195,29 @@ export const columns: TableColumn<ListItemType>[] = [
     hideInSearch: true,
     customRender: ({ record }) => formatToDateTime(record.created_at),
   },
-  {
-    title: '操作',
-    width: 200,
-    dataIndex: 'ACTION',
-    actions: ({ record }) => {
-      const actions = []
-      actions.push({
-        label: '编辑'
-      })
-
-      if (record.status === 1) {
-        actions.push({
-          label: '隐藏'
-        })
-      } else {
-        actions.push({
-          label: '公开'
-        })
-      }
-      // actions.push({
-      //   label: '删除'
-      // })
-      return actions
-    }
-  },
+  // {
+  //   title: '操作',
+  //   width: 200,
+  //   dataIndex: 'ACTION',
+  //   actions: ({ record }) => {
+  //     const actions = [];
+  //     actions.push({
+  //       label: '编辑',
+  //     });
+  //     //
+  //     // if (record.status === 1) {
+  //     //   actions.push({
+  //     //     label: '隐藏',
+  //     //   });
+  //     // } else {
+  //     //   actions.push({
+  //     //     label: '公开',
+  //     //   });
+  //     // }
+  //     // actions.push({
+  //     //   label: '删除'
+  //     // })
+  //     return actions;
+  //   },
+  // },
 ];
