@@ -1,26 +1,26 @@
 import type {RouteRecordRaw} from 'vue-router';
 import {t} from '@/hooks/useI18n';
 
-const moduleName = 'tag';
+const moduleName = 'topic';
 const routes: Array<RouteRecordRaw> = [
+
+
     {
-        path: '/tag',
-        redirect: '/tag/list',
+        path: '/topic',
+        redirect: '/topic/list',
         meta: {
-            title: '标签管理',
+            title: 'topic',
             // hideInMenu: true,
         },
         children: [
             {
                 path: 'list',
                 name: `${moduleName}-list`,
-                component: () => import('@/views/tag/list.vue'),
-                meta: {title: t('routes.tag.list')},
+                component: () => import('@/views/topic/list.vue'),
+                meta: {title: t('routes.topic.list')},
             },
         ],
     },
-
-
 ]
 
 export default routes;

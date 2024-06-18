@@ -23,7 +23,7 @@
 <!--              <SignInButton mode="modal" />-->
 <!--            </SignedOut>-->
 <!--          </ClerkProvider>-->
-          <SignIn path="/sign-in" routing="path" sign-up-url="/sign-up" />
+<!--          <SignIn path="/sign-in" routing="path" sign-up-url="/sign-up" />-->
         </template>
       </DynamicTable>
     </Card>
@@ -37,7 +37,7 @@ import { useTable } from '@/components/core/dynamic-table';
 import { waitTime } from '@/utils/common';
 import Api from '@/api/'
 import {useFormModal} from "@/hooks/useModal";
-import { SignIn  } from 'vue-clerk'
+// import { SignIn  } from 'vue-clerk'
 import router from "@/router";
 const [DynamicTable, dynamicTableInstance] = useTable();
 const [showModal] = useFormModal();
