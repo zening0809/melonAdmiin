@@ -1,13 +1,17 @@
 import './polyfill';
 import { createApp } from 'vue';
+import { VueQueryPlugin } from '@tanstack/vue-query';
+import { WagmiPlugin } from '@wagmi/vue';
 import App from './App.vue';
 import { setupRouter } from './router';
 import { setupIcons } from './components/basic/icon';
+import { config } from './wagmi';
 import { setupStore } from '@/store';
 import { setupI18n } from '@/locales';
 import { setupAntd, setupAssets, setupGlobalMethods } from '@/plugins';
 
 const app = createApp(App);
+app.use(WagmiPlugin, { config }).use(VueQueryPlugin, {});
 
 function setupPlugins() {
   // 安装图标

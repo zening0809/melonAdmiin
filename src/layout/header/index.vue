@@ -18,6 +18,7 @@
     </div>
     <div class="header-right">
       <Space :size="20">
+        account: {{ address }}
         <Search />
         <Tooltip :title="$t('layout.header.tooltipLock')" placement="bottom">
           <LockOutlined @click="lockscreenStore.setLock(true)" />
@@ -56,6 +57,7 @@
     PoweroffOutlined,
     LockOutlined,
   } from '@ant-design/icons-vue';
+  import { useAccount, useDisconnect } from '@wagmi/vue';
   import {
     Layout,
     message,
@@ -74,6 +76,8 @@
   import { useLockscreenStore } from '@/store/modules/lockscreen';
   import { LOGIN_NAME } from '@/router/constant';
   import { useLayoutSettingStore } from '@/store/modules/layoutSetting';
+  const { address, chainId, status } = useAccount();
+  const { disconnect } = useDisconnect();
 
   defineProps({
     collapsed: {
@@ -108,6 +112,7 @@
       icon: <QuestionCircleOutlined />,
       centered: true,
       onOk: async () => {
+        disconnect();
         await userStore.logout();
         keepAliveStore.clear();
         // 移除标签页

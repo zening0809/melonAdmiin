@@ -31,8 +31,10 @@
 </template>
 
 <script lang="ts" setup>
+  import { useWriteContract } from '@wagmi/vue';
   import { Card, message } from 'ant-design-vue';
   import { columns } from './columns';
+  import { wagmiContractConfig } from './contracts';
   import { useTable } from '@/components/core/dynamic-table';
   import { waitTime } from '@/utils/common';
   import Api from '@/api/';
@@ -41,6 +43,7 @@
   import router from '@/router';
   const [DynamicTable, dynamicTableInstance] = useTable();
   const [showModal] = useFormModal();
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
   const openMenuModal = async (record: any, text = '', type: 'Y' | 'N' = 'Y') => {
     const [formRef] = await showModal({
       modalProps: {
@@ -102,6 +105,17 @@
           onClick({ record }) {
             console.log('record', record);
             router.push(`/stake/detail/${record.post_id}`);
+          },
+        });
+        actions.push({
+          label: '结算',
+          onClick({ record }) {
+            console.log('record', record);
+            writeContract({
+              ...wagmiContractConfig,
+              functionName: 'handleResult',
+              args: [0],
+            });
           },
         });
         // actions.push({
