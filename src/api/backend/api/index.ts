@@ -28,6 +28,7 @@ import * as businessTodo from './businessTodo';
 import * as tagService from './tag';
 import * as stakeService from './stake';
 import * as pointsService from './points';
+import * as nftService from './nft';
 export default {
   auth,
   account,
@@ -54,5 +55,6 @@ export default {
   businessTodo,
   tagService,
   stakeService,
-  pointsService
+  pointsService,
+  nftService,
 };

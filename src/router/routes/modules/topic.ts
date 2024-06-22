@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/topic',
     redirect: '/topic/list',
     meta: {
-      title: 'topic',
+      title: 'Topics',
       // hideInMenu: true,
     },
     children: [

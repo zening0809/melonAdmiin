@@ -6,5 +6,6 @@ import tag from './tag';
 import topic from './topic';
 import stake from './stake';
 import points from './points';
+import nft from './nft';
 
-export default [...dashboard, ...tag, ...topic, ...stake, ...points];
+export default [...dashboard, ...tag, ...topic, ...stake, ...points, ...nft];
