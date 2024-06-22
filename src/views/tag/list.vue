@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card title="查询表单基本使用示例" style="margin-top: 20px">
+    <Card title="标签管理" style="margin-top: 20px">
       <DynamicTable
           size="small"
           bordered
@@ -23,7 +23,7 @@
     </Card>
 
 
-        <a-modal v-model:open="visible"  title="Basic Drawer" @ok="onOk">
+        <a-modal v-model:open="visible"  title="标签管理" @ok="onOk">
           <a-form ref="modalFormRef" v-bind="layout" :model="modalFormState"  name="userForm">
             <a-form-item name="name" label="标签名称" :rules="[{ required: true }]">
               <a-input v-model:value="modalFormState.name" />
@@ -82,9 +82,11 @@ const loadData = async (params): Promise<API.TableListResult> => {
     },
   ]);
 
+  console.log('res:', res)
+
   return {
     ...params,
-    items: res,
+    items: [...res],
   };
 };
 

@@ -17,9 +17,9 @@
 
       </template>
       <a-descriptions title="基础信息">
-        <a-descriptions-item label="对赌ID">{{stake?.stakeId || '-'}}</a-descriptions-item>
+        <a-descriptions-item label="提案ID">{{stake?.stakeId || '-'}}</a-descriptions-item>
         <a-descriptions-item label="状态">{{stakeStatusMap[stake?.status] || '-'}}</a-descriptions-item>
-        <a-descriptions-item label="对赌内容">{{stake?.content || '-'}}</a-descriptions-item>
+        <a-descriptions-item label="提案内容">{{stake?.content || '-'}}</a-descriptions-item>
         <a-descriptions-item label="发起时间">{{format(stake?.created_at) || '-'}}</a-descriptions-item>
         <a-descriptions-item label="关联帖子">
           {{post?.title || '-'}}

@@ -67,42 +67,48 @@ export type ListItemType = (typeof tableData)[number];
 // 使用TableColumn<ListItemType> 将会限制dataIndex的类型，但换来的是dataIndex有类型提示
 export const columns: TableColumn<ListItemType>[] = [
   {
-    title: '对赌ID',
-    dataIndex: 'stake_id',
+    title: '提案ID',
+    dataIndex: 'post_id',
     // sorter: true,
-    width: 60,
-    hideInSearch: true,
+    searchField: 'postId',
   },
   {
-    title: '对赌内容',
+    title: '提案内容',
     dataIndex: 'stake_content',
+    hideInSearch: true,
   },
   {
     title: '帖子标题',
     dataIndex: 'post_title',
+    searchField: 'postName',
   },
   {
     title: '参与人数',
     dataIndex: 'price',
+    hideInSearch: true,
   },
   {
     title: '质押金额',
     dataIndex: 'nested',
+    hideInSearch: true,
   },
   {
-    title: '对赌状态',
+    title: '提案状态',
     dataIndex: 'stake_status',
+    hideInSearch: true,
     customRender: ({ record }) => {
       return record.stake_status == 1 ? '待审批' : record.stake_status == 2 ? '审批通过' : "审批不通过"
     },
   },
   {
     title: '结束时间',
+    hideInSearch: true,
     dataIndex: 'stake_expiredAt',
     customRender: ({ record }) => formatToDateTime(record.stake_expiredAt),
   },
   {
     title: '发起时间',
+    hideInSearch: true,
     dataIndex: 'stake_created_at',
     customRender: ({ record }) => formatToDateTime(record.stake_created_at),
   },

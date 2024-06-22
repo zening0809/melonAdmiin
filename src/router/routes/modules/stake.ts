@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/stake',
         redirect: '/stake/list',
         meta: {
-            title: '投票对赌',
+            title: '投票提案',
             // hideInMenu: true,
         },
         children: [
