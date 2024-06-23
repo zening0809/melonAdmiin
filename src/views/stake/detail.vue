@@ -14,18 +14,21 @@
           </template>
           <a-button type="primary" style="margin-left: 20px">不通过</a-button>
         </a-popover>
-
       </template>
       <a-descriptions title="基础信息">
-        <a-descriptions-item label="对赌ID">{{stake?.stakeId || '-'}}</a-descriptions-item>
-        <a-descriptions-item label="状态">{{stakeStatusMap[stake?.status] || '-'}}</a-descriptions-item>
-        <a-descriptions-item label="对赌内容">{{stake?.content || '-'}}</a-descriptions-item>
-        <a-descriptions-item label="发起时间">{{format(stake?.created_at) || '-'}}</a-descriptions-item>
+        <a-descriptions-item label="提案ID">{{ stake?.stakeId || '-' }}</a-descriptions-item>
+        <a-descriptions-item label="状态">{{
+          stakeStatusMap[stake?.status] || '-'
+        }}</a-descriptions-item>
+        <a-descriptions-item label="提案内容">{{ stake?.content || '-' }}</a-descriptions-item>
+        <a-descriptions-item label="发起时间">{{
+          format(stake?.created_at) || '-'
+        }}</a-descriptions-item>
         <a-descriptions-item label="关联帖子">
-          {{post?.title || '-'}}
+          {{ post?.title || '-' }}
         </a-descriptions-item>
         <a-descriptions-item label="结束时间">
-          {{format(stake?.expiredAt)}}
+          {{ format(stake?.expiredAt) }}
         </a-descriptions-item>
       </a-descriptions>
     </Card>
@@ -35,24 +38,18 @@
         <a-descriptions-item label="选项1">1810000000</a-descriptions-item>
         <a-descriptions-item label="选项2">Hangzhou, Zhejiang</a-descriptions-item>
         <a-descriptions-item label="总质押数">empty</a-descriptions-item>
-        <a-descriptions-item label="选项1投票数">
-          No. 18,
-        </a-descriptions-item>
-        <a-descriptions-item label="选项2投票数">
-          No. 18,
-        </a-descriptions-item>
-        <a-descriptions-item label="发起人奖励">
-          No. 18,
-        </a-descriptions-item>
+        <a-descriptions-item label="选项1投票数"> No. 18, </a-descriptions-item>
+        <a-descriptions-item label="选项2投票数"> No. 18, </a-descriptions-item>
+        <a-descriptions-item label="发起人奖励"> No. 18, </a-descriptions-item>
       </a-descriptions>
     </Card>
     <Card title="" style="">
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="投票明细">
-          <VoteTable :count="voteCount" :list="voteList"></VoteTable>
+          <VoteTable :count="voteCount" :list="voteList" />
         </a-tab-pane>
         <a-tab-pane key="2" tab="评审明细" force-render>
-          <ReviewTable  :count="psCount" :list="psList"></ReviewTable>
+          <ReviewTable :count="psCount" :list="psList" />
         </a-tab-pane>
       </a-tabs>
     </Card>
@@ -60,103 +57,99 @@
 </template>
 
 <script lang="ts" setup>
-import {Card, message} from 'ant-design-vue';
-import {onMounted, ref} from 'vue';
-import VoteTable from "@/views/stake/components/VoteTable.vue";
-import ReviewTable from "@/views/stake/components/ReviewTable.vue";
-import {
-  getPostByOneService,
-  getReviewDetailService,
-  getStakeByOneService,
-  getVoteDetailService
-} from "@/api/backend/api/stake";
-import { useRouter, useRoute } from "vue-router";
-import {formatToDateTime} from "@/utils/dateUtil";
-import Api from '@/api/'
-const route = useRoute()
-const activeKey = ref('1');
-const stake = ref(null)
-const post = ref(null)
-const visible = ref(false)
-const visible2 = ref(false)
-const voteList = ref([])
-const psList = ref([])
-const psCount = ref(0)
-const voteCount = ref(0)
-const stakeStatusMap = {
-  1: '待审批',
-  2: '审批通过',
-  3: '审批驳回',
-  4: '陪审中'
-}
+  import { onMounted, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import { Card, message } from 'ant-design-vue';
+  import VoteTable from '@/views/stake/components/VoteTable.vue';
+  import ReviewTable from '@/views/stake/components/ReviewTable.vue';
+  import {
+    getPostByOneService,
+    getReviewDetailService,
+    getStakeByOneService,
+    getVoteDetailService,
+  } from '@/api/backend/api/stake';
+  import { formatToDateTime } from '@/utils/dateUtil';
+  import Api from '@/api/';
+  const route = useRoute();
+  const activeKey = ref('1');
+  const stake = ref(null);
+  const post = ref(null);
+  const visible = ref(false);
+  const visible2 = ref(false);
+  const voteList = ref([]);
+  const psList = ref([]);
+  const psCount = ref(0);
+  const voteCount = ref(0);
+  const stakeStatusMap = {
+    1: '待审批',
+    2: '审批通过',
+    3: '审批驳回',
+    4: '陪审中',
+  };
 
+  onMounted(() => {
+    loadData();
+  });
+  const loadData = () => {
+    getStake();
+    getPost();
+  };
+  const ok = () => {
+    console.log('通过:');
+    Api.stakeService.changeStakeService({ stakeId: stake.value.stakeId, status: 2 }).then((res) => {
+      console.log('res:', res);
+      message.success('审批通过，操作成功');
+      loadData();
+      visible.value = false;
+    });
+  };
+  const format = (date) => {
+    return formatToDateTime(new Date(date));
+  };
 
-onMounted(() => {
-  loadData()
-})
-const loadData = () => {
-  getStake()
-  getPost()
-}
-const ok = () => {
-  console.log('通过:')
-  Api.stakeService.changeStakeService({stakeId: stake.stakeId, status: 2}).then(res => {
-    console.log('res:',res)
-    message.success('审批通过，操作成功');
-    loadData()
-    visible.value = false
-  })
-
-}
-const format = (date) => {
-  return formatToDateTime(new Date(date))
-}
-
-const ok2 = () => {
-  console.log('通过:')
-  Api.stakeService.changeStakeService({stakeId: stake.stakeId, status: 3}).then(res => {
-    console.log('res:',res)
-    message.success('审批不通过，操作成功');
-    loadData()
-    visible2.value = false
-  })
-}
-const getStake = () => {
-  getStakeByOneService({
-    postId: route.params.id
-  }).then((resp:any) => {
-    console.log(resp)
-    stake.value = resp
-    getVote(resp.stakeId)
-    getPs(resp.stakeId)
-  })
-}
-const getPost = () => {
-  getPostByOneService({id: route.params.id}).then(resp => {
-    console.log(resp)
-    post.value = resp
-  })
-}
-const getVote = (stakeId:number) => {
-  getVoteDetailService({
-    stakeId: 12
-  }).then((resp: any) => {
-    console.log('vote:',resp)
-    voteCount.value = resp.voteCount
-    voteList.value = resp.voteUsers
-  })
-}
-const getPs = (stakeId: number) => {
-  getReviewDetailService({
-    stakeId: 12
-  }).then((resp: any) => {
-    console.log('ps:',resp)
-    psCount.value = resp.reviewCount
-    psList.value = resp.reviewUsers
-  })
-}
+  const ok2 = () => {
+    console.log('通过:');
+    Api.stakeService.changeStakeService({ stakeId: stake.value.stakeId, status: 3 }).then((res) => {
+      console.log('res:', res);
+      message.success('审批不通过，操作成功');
+      loadData();
+      visible2.value = false;
+    });
+  };
+  const getStake = () => {
+    getStakeByOneService({
+      postId: route.params.id,
+    }).then((resp: any) => {
+      console.log(resp);
+      stake.value = resp;
+      getVote(resp.stakeId);
+      getPs(resp.stakeId);
+    });
+  };
+  const getPost = () => {
+    getPostByOneService({ id: route.params.id }).then((resp) => {
+      console.log(resp);
+      post.value = resp;
+    });
+  };
+  const getVote = (stakeId: number) => {
+    getVoteDetailService({
+      stakeId: 12,
+    }).then((resp: any) => {
+      console.log('vote:', resp);
+      voteCount.value = resp.voteCount;
+      voteList.value = resp.voteUsers;
+    });
+  };
+  const getPs = (stakeId: number) => {
+    getReviewDetailService({
+      stakeId: 12,
+    }).then((resp: any) => {
+      console.log('ps:', resp);
+      psCount.value = resp.reviewCount;
+      psList.value = resp.reviewUsers;
+    });
+  };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
