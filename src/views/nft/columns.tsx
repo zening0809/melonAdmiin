@@ -86,11 +86,13 @@ export const columns: TableColumn<ListItemType>[] = [
   {
     title: '过期时间',
     dataIndex: 'expireAt',
+    hideInSearch: true,
     customRender: ({ record }) => formatToDateTime(record.expireAt),
   },
   {
     title: '发起时间',
     dataIndex: 'createdAt',
+    hideInSearch: true,
     customRender: ({ record }) => formatToDateTime(record.createdAt),
   },
 ];

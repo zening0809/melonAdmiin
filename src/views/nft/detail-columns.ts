@@ -66,7 +66,7 @@ export type ListItemType = (typeof tableData)[number];
 export const columns: TableColumn<ListItemType>[] = [
   {
     title: '活动ID',
-    dataIndex: 'activityUser_activiyId',
+    dataIndex: 'activityUser_activityId',
     // sorter: true,
     width: 60,
     hideInSearch: true,
