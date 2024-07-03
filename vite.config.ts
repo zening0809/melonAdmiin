@@ -118,8 +118,9 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         '^/api': {
           // target: 'https://nest-api.buqiyuan.site',
           // target: 'http://127.0.0.1:8881',
-          target: 'http://melon.v5.idcfengye.com',
+          // target: 'http://melon.v5.idcfengye.com',
           // target: 'http://huanyu.chat',
+          target: 'https://melon-server.zeabur.app',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
