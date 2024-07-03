@@ -24,20 +24,23 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
-  import { useWriteContract } from '@wagmi/vue';
+  import { reactive, watch } from 'vue';
+  import { useReadContract, useWriteContract } from '@wagmi/vue';
   import { useRoute } from 'vue-router';
   import { Card, message } from 'ant-design-vue';
   import { columns } from './detail-columns';
+  import { wagmiContractConfig, distributeNft } from './contracts.ts';
   import { useTable } from '@/components/core/dynamic-table';
   import Api from '@/api/';
   import { useFormModal } from '@/hooks/useModal';
+  const { data: distributeData, writeContract } = useWriteContract();
   const [DynamicTable, dynamicTableInstance] = useTable();
   const [showModal] = useFormModal();
 
-  const PICK_NUM = 3;
+  const PICK_NUM = 1;
   let userList = reactive([]);
-  const { data: hash, error, isPending, writeContract } = useWriteContract();
+  let nfts = reactive([]);
+  let pickResult = reactive({});
   const openMenuModal = async (record: any, text = '', type: 'Y' | 'N' = 'Y') => {
     const [formRef] = await showModal({
       modalProps: {
@@ -81,14 +84,62 @@
     return shuffledArray.slice(0, sampleSize);
   }
 
-  const pickUser = async () => {
+  const resConstruct = useReadContract({
+    ...wagmiContractConfig,
+    functionName: 'getAllStartUpNFTs',
+  });
+
+  watch(resConstruct.data, (newVal: any) => {
+    if (newVal) {
+      console.log(newVal);
+      for (const item of newVal) {
+        nfts.push(item);
+      }
+      // nfts = newVal.value;
+    }
+  });
+
+  watch(distributeData, (newData) => {
+    if (newData) {
+      console.log('Transaction successful:', newData);
+      console.log('pickResult:', pickResult);
+      message.success('抽取用户成功');
+    }
+  });
+
+  const pickUser = () => {
+    // console.log(useConfig, '---useConfig------');
     if (userList.length < PICK_NUM) {
       message.warning('用户数量不足');
     }
+    // console.log(data, 'data-----------');
     const pickUsers = getRandomSamples(userList, PICK_NUM);
     const userAccounts = pickUsers.map((user) => user.user_web3Wallet);
+
+    console.log(nfts.length);
+
+    const tempList = new Array(nfts.length).fill(1).map((item, index) => index);
+    console.log(tempList);
+    const nftIndexList = getRandomSamples(tempList, PICK_NUM);
+
+    const nftTokens = [];
+    for (const i of nftIndexList) {
+      nftTokens.push(nfts[i]?.tokenId);
+    }
     console.log(userAccounts, 'userAccounts');
+    console.log(nftTokens, 'nftTokens');
+
+    pickResult = {
+      userAccounts,
+      nftTokens,
+    };
+    writeContract({
+      ...distributeNft,
+      functionName: 'distributeStartUpNFT',
+      args: [userAccounts, nftTokens],
+    });
   };
+
   const route = useRoute();
 
   const columns2 = [...columns];

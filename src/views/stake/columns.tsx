@@ -1,12 +1,10 @@
-import { debounce } from 'lodash-es';
-import { Tag, Spin } from 'ant-design-vue';
 import type { TableColumn } from '@/components/core/dynamic-table';
 import { waitTime } from '@/utils/common';
 import { useDictStore } from '@/store/modules/dict';
-import {formatToDateTime} from "@/utils/dateUtil";
+import { formatToDateTime } from '@/utils/dateUtil';
 
 const names = ['王路飞', '王大蛇', '李白', '刺客伍六七'];
-const { fetchDict, dictPending, showDictLabel } = useDictStore();
+const { fetchDict } = useDictStore();
 
 export const fetchStatusMapData = async (keyword = '') => {
   const [data] = await fetchDict('sell_status');
@@ -97,7 +95,11 @@ export const columns: TableColumn<ListItemType>[] = [
     dataIndex: 'stake_status',
     hideInSearch: true,
     customRender: ({ record }) => {
-      return record.stake_status == 1 ? '待审批' : record.stake_status == 2 ? '审批通过' : "审批不通过"
+      return record.stake_status == 1
+        ? '待审批'
+        : record.stake_status == 2
+          ? '审批通过'
+          : '审批不通过';
     },
   },
   {
