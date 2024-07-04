@@ -117,7 +117,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       proxy: {
         '^/api': {
           // target: 'https://nest-api.buqiyuan.site',
-          // target: 'http://127.0.0.1:8881',
+          // target: 'http://127.0.0.1:7001',
           // target: 'http://melon.v5.idcfengye.com',
           // target: 'http://huanyu.chat',
           target: 'https://melon-server.zeabur.app',
@@ -125,7 +125,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
         '^/upload': {
-          target: 'https://nest-api.buqiyuan.site/upload',
+          // target: 'https://nest-api.buqiyuan.site/upload',
+          target: 'https://melon-server.zeabur.app/upload',
           // target: 'http://127.0.0.1:7001/upload',
           changeOrigin: true,
           rewrite: (path) => path.replace(new RegExp(`^/upload`), ''),
