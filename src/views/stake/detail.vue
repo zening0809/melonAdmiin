@@ -34,13 +34,13 @@
     </Card>
     <Card title="" style="margin-bottom: 20px">
       <a-descriptions title="投票信息">
-        <a-descriptions-item label="总投票人数">Zhou Maomao</a-descriptions-item>
-        <a-descriptions-item label="选项1">1810000000</a-descriptions-item>
-        <a-descriptions-item label="选项2">Hangzhou, Zhejiang</a-descriptions-item>
-        <a-descriptions-item label="总质押数">empty</a-descriptions-item>
-        <a-descriptions-item label="选项1投票数"> No. 18, </a-descriptions-item>
-        <a-descriptions-item label="选项2投票数"> No. 18, </a-descriptions-item>
-        <a-descriptions-item label="发起人奖励"> No. 18, </a-descriptions-item>
+        <a-descriptions-item label="总投票人数">{{ voteCount }}</a-descriptions-item>
+        <a-descriptions-item label="选项1">{{ stake?.option1 }}</a-descriptions-item>
+        <a-descriptions-item label="选项2">{{ stake?.option2 }}</a-descriptions-item>
+        <a-descriptions-item label="总质押数">-</a-descriptions-item>
+        <a-descriptions-item label="选项1投票数"> - </a-descriptions-item>
+        <a-descriptions-item label="选项2投票数"> - </a-descriptions-item>
+        <a-descriptions-item label="发起人奖励"> - </a-descriptions-item>
       </a-descriptions>
     </Card>
     <Card title="" style="">
@@ -82,9 +82,11 @@
   const voteCount = ref(0);
   const stakeStatusMap = {
     1: '待审批',
-    2: '审批通过',
-    3: '审批驳回',
-    4: '陪审中',
+    2: '通过',
+    3: '拒绝',
+    4: '陪审',
+    5: '陪审结束',
+    6: '完结',
   };
 
   onMounted(() => {
@@ -134,7 +136,7 @@
   };
   const getVote = (stakeId: number) => {
     getVoteDetailService({
-      stakeId: 12,
+      stakeId: stakeId,
     }).then((resp: any) => {
       console.log('vote:', resp);
       voteCount.value = resp.voteCount;

@@ -128,7 +128,7 @@
   const loadData = async (params): Promise<API.TableListResult> => {
     console.log('params', params);
     await waitTime(500);
-    const res = await Api.stakeService.getStakeService({ ...params });
+    const res = await Api.stakeService.getStakeService({ ...params, status: -1 });
     console.log('res：', res);
     // 手动设置搜索表单的搜索项
     dynamicTableInstance?.getQueryFormRef()?.updateSchema?.([
