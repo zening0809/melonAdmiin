@@ -84,7 +84,7 @@
     1: '待审批',
     2: '通过',
     3: '拒绝',
-    4: '陪审',
+    4: '陪审中',
     5: '陪审结束',
     6: '完结',
   };
@@ -124,8 +124,8 @@
     }).then((resp: any) => {
       console.log(resp);
       stake.value = resp;
-      getVote(resp.stakeId);
-      getPs(resp.stakeId);
+      getVote(resp.id);
+      getPs(resp.id);
     });
   };
   const getPost = () => {
@@ -145,7 +145,7 @@
   };
   const getPs = (stakeId: number) => {
     getReviewDetailService({
-      stakeId: 12,
+      stakeId: stakeId,
     }).then((resp: any) => {
       console.log('ps:', resp);
       psCount.value = resp.reviewCount;

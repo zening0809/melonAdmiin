@@ -99,7 +99,7 @@ export const columns: TableColumn<ListItemType>[] = [
         1: '待审批',
         2: '通过',
         3: '拒绝',
-        4: '陪审',
+        4: '陪审中',
         5: '陪审结束',
         6: '完结',
       };

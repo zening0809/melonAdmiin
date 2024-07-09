@@ -18,11 +18,11 @@ export const columns: TableColumn[] = [
     dataIndex: 'vote_option',
     hideInSearch: true,
   },
-  {
-    title: '理由',
-    dataIndex: 'user_remark',
-    hideInSearch: true,
-  },
+  // {
+  //   title: '理由',
+  //   dataIndex: 'user_remark',
+  //   hideInSearch: true,
+  // },
   {
     title: '陪审轮次',
     dataIndex: 'skin_name',
@@ -32,15 +32,15 @@ export const columns: TableColumn[] = [
       '1'
     ),
   },
-
-  {
-    title: '状态',
-    dataIndex: 'vote_status',
-    hideInSearch: true,
-    customRender: ({record}) => {
-      return record.vote_status = 1 ? '' : ''
-    }
-  },
+    //
+    // {
+    //   title: '状态',
+    //   dataIndex: 'vote_status',
+    //   hideInSearch: true,
+    //   customRender: ({record}) => {
+    //     return record.vote_status = 1 ? '' : ''
+    //   }
+    // },
 
 ];
 export const columns2: TableColumn[] = [
@@ -80,7 +80,7 @@ export const columns2: TableColumn[] = [
     dataIndex: 'review_status',
     hideInSearch: true,
     customRender: ({record}) => {
-      return record.review_status = 1 ? '未陪审' : record.review_status = 2  ? '已审批' :  ''
+      return record.review_status = 1 ? '待陪审' : record.review_status = 2  ? '已陪审' :  ''
     }
   },
 
