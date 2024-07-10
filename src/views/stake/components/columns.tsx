@@ -1,5 +1,9 @@
 import { Tag, Image } from 'ant-design-vue';
 import type { TableColumn } from '@/components/core/dynamic-table';
+import {formatToDateTime} from "@/utils/dateUtil";
+const format = (date) => {
+  return formatToDateTime(new Date(date));
+};
 
 export const columns: TableColumn[] = [
   {
@@ -36,6 +40,14 @@ export const columns: TableColumn[] = [
     customRender: ({ record }) => (
       '1'
     ),
+  },
+  {
+    title: '投票时间',
+    dataIndex: 'vote_created_at',
+    hideInSearch: true,
+    customRender: ({record}) => {
+      return format(record.vote_created_at)
+    }
   },
     //
     // {
@@ -91,6 +103,15 @@ export const columns2: TableColumn[] = [
     hideInSearch: true,
     customRender: ({record}) => {
       return record.review_status === 1 ? '待陪审' : record.review_status === 2  ? '已陪审' :  ''
+    }
+  },
+
+  {
+    title: '陪审时间',
+    dataIndex: 'review_created_at',
+    hideInSearch: true,
+    customRender: ({record}) => {
+      return format(record.review_created_at)
     }
   },
 

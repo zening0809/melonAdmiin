@@ -37,10 +37,10 @@
         <a-descriptions-item label="总投票人数">{{ voteCount }}</a-descriptions-item>
         <a-descriptions-item label="选项1">{{ stake?.option1 }}</a-descriptions-item>
         <a-descriptions-item label="选项2">{{ stake?.option2 }}</a-descriptions-item>
-        <a-descriptions-item label="总质押数">-</a-descriptions-item>
-        <a-descriptions-item label="选项1投票数"> - </a-descriptions-item>
-        <a-descriptions-item label="选项2投票数"> - </a-descriptions-item>
-        <a-descriptions-item label="发起人奖励"> - </a-descriptions-item>
+        <a-descriptions-item label="总质押数">{{voteCoinCount}}</a-descriptions-item>
+        <a-descriptions-item label="选项1投票数"> {{vote0Count}} </a-descriptions-item>
+        <a-descriptions-item label="选项2投票数"> {{vote1Count}} </a-descriptions-item>
+<!--        <a-descriptions-item label="发起人奖励"> - </a-descriptions-item>-->
       </a-descriptions>
     </Card>
     <Card title="" style="">
@@ -80,6 +80,9 @@
   const psList = ref([]);
   const psCount = ref(0);
   const voteCount = ref(0);
+  const vote0Count = ref(0);
+  const vote1Count = ref(0);
+  const voteCoinCount = ref(0);
   const stakeStatusMap = {
     1: '待审批',
     2: '通过',
@@ -146,6 +149,13 @@
       voteCount.value = resp.voteCount;
       voteList.value = resp.voteUsers?.map(vu => {
         vu.opMap = opMap
+        if (vu.vote_option === '0') {
+          vote0Count.value += 1
+        } else if (vu.vote_option === '1') {
+          vote1Count.value += 1
+
+        }
+        voteCoinCount.value += (vu.vote_coin || 0)
         return vu
       });
     });
