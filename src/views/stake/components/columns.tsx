@@ -17,6 +17,11 @@ export const columns: TableColumn[] = [
     title: '投票项',
     dataIndex: 'vote_option',
     hideInSearch: true,
+    customRender: ({record}) =>  {
+      const v = record.opMap[record.vote_option]
+
+      return v
+    }
   },
   // {
   //   title: '理由',
@@ -59,12 +64,17 @@ export const columns2: TableColumn[] = [
     title: '投票项',
     dataIndex: 'review_option',
     hideInSearch: true,
+    customRender: ({record}) =>  {
+      const v = record.opMap[record.review_option]
+
+      return v
+    }
   },
-  {
-    title: '理由',
-    dataIndex: 'reason',
-    hideInSearch: true,
-  },
+  // {
+  //   title: '理由',
+  //   dataIndex: 'reason',
+  //   hideInSearch: true,
+  // },
   {
     title: '陪审轮次',
     dataIndex: 'skin_name',
@@ -80,7 +90,7 @@ export const columns2: TableColumn[] = [
     dataIndex: 'review_status',
     hideInSearch: true,
     customRender: ({record}) => {
-      return record.review_status = 1 ? '待陪审' : record.review_status = 2  ? '已陪审' :  ''
+      return record.review_status === 1 ? '待陪审' : record.review_status === 2  ? '已陪审' :  ''
     }
   },
 

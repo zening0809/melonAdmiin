@@ -124,8 +124,12 @@
     }).then((resp: any) => {
       console.log(resp);
       stake.value = resp;
-      getVote(resp.id);
-      getPs(resp.id);
+      const option = {
+        0: resp.option1,
+        1: resp.option2
+      }
+      getVote(resp.id, option);
+      getPs(resp.id, option);
     });
   };
   const getPost = () => {
@@ -134,22 +138,28 @@
       post.value = resp;
     });
   };
-  const getVote = (stakeId: number) => {
+  const getVote = (stakeId: number, opMap = {}) => {
     getVoteDetailService({
       stakeId: stakeId,
     }).then((resp: any) => {
-      console.log('vote:', resp);
+      // console.log('vote:', resp);
       voteCount.value = resp.voteCount;
-      voteList.value = resp.voteUsers;
+      voteList.value = resp.voteUsers?.map(vu => {
+        vu.opMap = opMap
+        return vu
+      });
     });
   };
-  const getPs = (stakeId: number) => {
+  const getPs = (stakeId: number, opMap = {}) => {
     getReviewDetailService({
       stakeId: stakeId,
     }).then((resp: any) => {
-      console.log('ps:', resp);
+      // console.log('ps:', resp);
       psCount.value = resp.reviewCount;
-      psList.value = resp.reviewUsers;
+      psList.value = resp.reviewUsers.map(vu => {
+        vu.opMap = opMap
+        return vu
+      });
     });
   };
 </script>
