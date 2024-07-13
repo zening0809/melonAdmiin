@@ -95,11 +95,20 @@ export const columns: TableColumn<ListItemType>[] = [
     dataIndex: 'stake_status',
     hideInSearch: true,
     customRender: ({ record }) => {
-      return record.stake_status == 1
-        ? '待审批'
-        : record.stake_status == 2
-          ? '审批通过'
-          : '审批不通过';
+      const statusMap = {
+        1: '待审批',
+        2: '通过',
+        3: '拒绝',
+        4: '陪审中',
+        5: '陪审结束',
+        6: '完结',
+      };
+      return statusMap[record.stake_status];
+      // return record.stake_status == 1
+      //   ? '待审批'
+      //   : record.stake_status == 2
+      //     ? '审批通过'
+      //     : '审批不通过';
     },
   },
   {
