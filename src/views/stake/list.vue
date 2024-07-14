@@ -31,10 +31,11 @@
 </template>
 
 <script lang="ts" setup>
+  import { ref, watch } from 'vue';
   import { useWriteContract } from '@wagmi/vue';
   import { Card, message } from 'ant-design-vue';
   import { columns } from './columns';
-  import { wagmiContractConfig } from './contracts';
+  import { wagmiContractConfig } from './contracts.ts';
   import { useTable } from '@/components/core/dynamic-table';
   import { waitTime } from '@/utils/common';
   import Api from '@/api/';
@@ -77,6 +78,27 @@
       ...record,
     });
   };
+
+  const needHandleResult = ref('');
+
+  watch(needHandleResult, (newVal: any) => {
+    if (newVal) {
+      console.log(newVal, 'xxxxx 需要请求结果');
+      writeContract({
+        ...wagmiContractConfig,
+        functionName: 'handleResult',
+        args: [newVal],
+      });
+    }
+  });
+
+  watch(hash, (newVal: any) => {
+    if (newVal) {
+      console.log(newVal, 'newVal');
+      // nfts = newVal.value;
+    }
+  });
+
   const columns2 = [
     ...columns,
     {
@@ -107,19 +129,23 @@
             router.push(`/stake/detail/${record.post_id}`);
           },
         });
-        if (record.stake_status === 4) {
+
+        if (record.stake_status >= 4 && !record.stake_result) {
           actions.push({
             label: '结算',
-            onClick({ record }) {
-              console.log('record', record);
-              writeContract({
-                ...wagmiContractConfig,
-                functionName: 'handleResult',
-                args: [0],
-              });
+            onClick: async ({ record }) => {
+              try {
+                const res = await Api.stakeService.handleResult({ stakeId: record.stake_id });
+                console.log(res, 'res');
+              } catch (error) {
+                $message.error({ content: '结算失败' });
+              }
+
+              needHandleResult.value = record.stake_id;
+
+              loadData({ page: 1, pageSize: 10 });
             },
           });
-          loadData();
         }
 
         // actions.push({
@@ -130,29 +156,9 @@
     },
   ];
   const loadData = async (params): Promise<API.TableListResult> => {
-    console.log('params', params);
     await waitTime(500);
     const res = await Api.stakeService.getStakeService({ ...params, status: -1 });
-    console.log('res：', res);
     // 手动设置搜索表单的搜索项
-    dynamicTableInstance?.getQueryFormRef()?.updateSchema?.([
-      {
-        field: 'price',
-        componentProps: {
-          options: [
-            {
-              label: '0-199',
-              value: '0-199',
-            },
-            {
-              label: '200-999',
-              value: '200-999',
-            },
-          ],
-        },
-      },
-    ]);
-
     return {
       ...params,
       items: res,
