@@ -107,17 +107,21 @@
             router.push(`/stake/detail/${record.post_id}`);
           },
         });
-        actions.push({
-          label: '结算',
-          onClick({ record }) {
-            console.log('record', record);
-            writeContract({
-              ...wagmiContractConfig,
-              functionName: 'handleResult',
-              args: [0],
-            });
-          },
-        });
+        if (record.stake_status === 4) {
+          actions.push({
+            label: '结算',
+            onClick({ record }) {
+              console.log('record', record);
+              writeContract({
+                ...wagmiContractConfig,
+                functionName: 'handleResult',
+                args: [0],
+              });
+            },
+          });
+          loadData();
+        }
+
         // actions.push({
         //   label: '删除'
         // })
